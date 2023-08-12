@@ -65,17 +65,41 @@ class GCalender:
             return "Error occured"
         
     def create_event(self, event : Dict):
-        """Creates an event"""
+        """sample event={
+            'summary': 'Google I/O 2023',
+            'location': '800 Howard St., San Francisco, CA 94103',
+            'description': 'A chance to hear more about Google\'s developer products.',
+            'start': {
+                'dateTime': '2023-08-18T09:00:00+05:00',
+                'timeZone': 'IST',
+                },
+            'end': {
+                'dateTime': '2023-08-18T17:00:00+05:00',
+                'timeZone': 'IST',
+                },
+            'recurrence': [
+                'RRULE:FREQ=DAILY;COUNT=2'
+                ],
+            'attendees': [
+                {'email': 'prakaasharun50@gmail.com'}
+            ]
+        }
+    """
         try:
             self.get_service()
-            event = event
+            event = self.service.events().insert(calendarId=self.calendar_id, body=event).execute()
+            return "Event created"
         except HttpError as e:
             print(e)
             return "Error occured"
+        
             
-
-if __name__ == '__main__':
-    gcalender = GCalender()
-    # print(gcalender.get_service())
-    print(gcalender.display_events())
-    
+    def delete_event(self, event_id : str):
+        """Deletes the event with the given event_id"""
+        try:
+            self.get_service()
+            self.service.events().delete(calendarId=self.calendar_id, eventId=event_id).execute()
+            return "Event deleted"
+        except HttpError as e:
+            print(e)
+            return "Error occured"
