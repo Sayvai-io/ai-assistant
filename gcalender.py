@@ -2,6 +2,7 @@
 import os.path
 import datetime as dt
 
+from typing import Dict, List, Tuple
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -18,7 +19,7 @@ class GCalender:
         """Initializes the GCalender class"""
         self.service = None
         self.creds = None
-        self.calendar_id = None
+        self.calendar_id = "primary"
         if os.path.exists('token.json'):
             self.creds = Credentials.from_authorized_user_file('token.json', SCOPES)
         if self.creds and self.creds.expired and self.creds.refresh_token:
@@ -38,10 +39,19 @@ class GCalender:
         return "Credentials obtained"
     
     def get_service(self):
+        """Gets the service for the user"""
         try:
             self.service = build('calendar', 'v3', credentials=self.creds)
+            return "Service obtained"
+        except Exception as e:
+            print(e)
+            return "Error occured"
+    
+    def display_events(self, max_results : int = 10):
+        try:
+            self.get_service()
             now = dt.datetime.utcnow().isoformat() + 'Z'
-            event_result = self.service.events().list(calendarId='primary', timeMin=now,
+            event_result = self.service.events().list(calendarId=self.calendar_id, timeMin=now,
                                                        maxResults=10, singleEvents=True,
                                                        orderBy='startTime').execute()
             events = event_result.get('items', [])
@@ -50,13 +60,22 @@ class GCalender:
             for event in events:
                 start = event['start'].get('dateTime', event['start'].get('date'))
                 print(start, event['summary'])
-            return "Done"
         except Exception as e:
             print(e)
             return "Error occured"
-
+        
+    def create_event(self, event : Dict):
+        """Creates an event"""
+        try:
+            self.get_service()
+            event = event
+        except HttpError as e:
+            print(e)
+            return "Error occured"
+            
 
 if __name__ == '__main__':
     gcalender = GCalender()
     # print(gcalender.get_service())
+    print(gcalender.display_events())
     
