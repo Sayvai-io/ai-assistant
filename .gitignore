@@ -6,3 +6,4 @@ credentials.json
 __pycache__
 token.json
 gdrive_key.txt
+tests
