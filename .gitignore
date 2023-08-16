@@ -7,3 +7,5 @@ __pycache__
 token.json
 gdrive_key.txt
 tests
+serpapi.txt
+serp_api_key.txt
