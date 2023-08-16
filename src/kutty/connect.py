@@ -2,7 +2,6 @@
 # Importing the required libraries
 import os
 import langchain
-from langchain.agents import initialize_agent
 from langchain.llms import OpenAI
 
 with open("openai_api_key.txt", "r") as f:
