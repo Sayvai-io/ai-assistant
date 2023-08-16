@@ -1,7 +1,6 @@
 """ Using Langchain Going to Generate a Server that can be used to shcedule meetings """
 # Importing the required libraries
 import os
-import langchain
 from langchain.chat_models import ChatOpenAI
 from typing import List, Dict, Any
 from langchain.agents import load_tools
