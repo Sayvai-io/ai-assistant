@@ -8,7 +8,7 @@ from langchain.agents import initialize_agent
 class AgentLoader:
     """This class is used to load Agent"""
     
-    def __init__(self, tools: Any, llm: Any, agent_name: str, verbose: bool = True):
+    def __init__(self, tools: Any, llm: Any, agent_name: str, verbose: bool = False):
         """Initializes the AgentLoader class"""
         self.tools = tools
         self.agent = None
