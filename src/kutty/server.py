@@ -18,8 +18,6 @@ with open("../../serp_api_key.txt", "r") as f:
 os.environ["OPENAI_API_KEY"] = OPEN_AI_KEY
 os.environ["SERPAPI_API_KEY"] = SERP_API_KEY
 
-# llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
-
 class LlmServer:
     """LLm server class"""
     def __init__(self) -> None:

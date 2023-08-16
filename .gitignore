@@ -9,3 +9,8 @@ gdrive_key.txt
 tests
 serpapi.txt
 serp_api_key.txt
+
+.pytest_cache
+build
+dist
+*.egg-info
