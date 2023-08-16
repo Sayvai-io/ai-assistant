@@ -2,11 +2,11 @@
 # Importing the required libraries
 import os
 import langchain
-# from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
 from typing import List, Dict, Any
 from langchain.agents import load_tools
 from langchain.agents import initialize_agent
-from langchain.llms import OpenAI
+# from langchain.llms import OpenAI
 
 
 with open("../../openai_api_key.txt", "r") as f:
@@ -23,7 +23,7 @@ os.environ["SERPAPI_API_KEY"] = SERP_API_KEY
 class LlmServer:
     """LLm server class"""
     def __init__(self) -> None:
-        self.llm = OpenAI(temperature=0, model="gpt-3.5-turbo-0613")
+        self.llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
         self.tools = None
         self.agent = None     
         
@@ -40,9 +40,5 @@ class LlmServer:
         return response
     
 
-if __name__ == "__main__":
-    server = LlmServer()
-    server.initialize(["serpapi", "llm-math"], "zero-shot-react-description")
-    print(server.get_response("What is the weather today?"))
 
 
